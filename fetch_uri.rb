@@ -3,8 +3,7 @@ require 'nokogiri'
 
 class FetchUri
   def initialize(uri,headers)
-    # headers hash
-    @uri = URI.parse(uri)
+    @uri = URI(uri)
     @headers = headers
     @proxy =proxy
     @user_agent =user_agent
@@ -59,26 +58,15 @@ class FetchUri
     begin
       api = Net::HTTP.new(@uri.host,@uri.port,@proxy[0],@proxy[1])
       api.use_ssl =(@uri.scheme =='https')
-      apicall = api.get(@uri.path,@headers)
+      apicall = api.get(@uri,@headers)
       @doc ||= Nokogiri::HTML apicall.body
     rescue 
       api = Net::HTTP.new(@uri.host,@uri.port)
       api.use_ssl =(@uri.scheme =='https')
-      apicall = api.get(@uri.path,@header)
+      apicall = api.get(@uri,@header)
       @doc ||= Nokogiri::HTML apicall.body
     rescue => e 
       puts e
     end
   end
 end
-def parse item
-  item.at('a.menu__cat-link')['href']
-end
-
-#u="https://www.adayroi.com/"
-#cat_item = FetchUri.new(u,{}).doc.at('.menu__cat-wrap').css('li.menu__cat-item')
-#item_ =[]
-#cat_item.each do |i|
-#  item_ << i.at('a.menu__cat-link')['href']
-#end
-#puts item_
