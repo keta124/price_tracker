@@ -1,0 +1,2 @@
+# price_tracker
+SHOW SERIES CARDINALITY
