@@ -2,7 +2,7 @@ require 'influxdb'
 module InfluxConnection
 
   def self.connection
-    InfluxDB::Client.new 'price_tracker',
+    InfluxDB::Client.new 'adayroi_price_tracker',
       host: 'localhost',
       username: 'sontn',
       password: 'Son@1123',
